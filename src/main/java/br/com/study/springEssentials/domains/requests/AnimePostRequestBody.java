@@ -1,4 +1,4 @@
-package br.com.study.springEssentials.requests;
+package br.com.study.springEssentials.domains.requests;
 
 import lombok.Data;
 

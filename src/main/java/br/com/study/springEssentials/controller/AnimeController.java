@@ -1,10 +1,10 @@
 package br.com.study.springEssentials.controller;
 
-import br.com.study.springEssentials.domain.Anime;
-import br.com.study.springEssentials.requests.AnimePostRequestBody;
-import br.com.study.springEssentials.requests.AnimePutRequestBody;
+import br.com.study.springEssentials.domains.domain.Anime;
+import br.com.study.springEssentials.domains.requests.AnimePostRequestBody;
+import br.com.study.springEssentials.domains.requests.AnimePutRequestBody;
 import br.com.study.springEssentials.service.AnimeService;
-import br.com.study.springEssentials.util.DateUtil;
+import br.com.study.springEssentials.domains.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

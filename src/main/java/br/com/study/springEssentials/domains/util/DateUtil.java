@@ -1,4 +1,4 @@
-package br.com.study.springEssentials.util;
+package br.com.study.springEssentials.domains.util;
 
 import org.springframework.stereotype.Component;
 

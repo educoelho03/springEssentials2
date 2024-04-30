@@ -1,4 +1,4 @@
-package br.com.study.springEssentials.domain;
+package br.com.study.springEssentials.domains.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Anime {
 
     @Id

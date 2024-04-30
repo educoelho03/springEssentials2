@@ -1,4 +1,4 @@
-package br.com.study.springEssentials.requests;
+package br.com.study.springEssentials.domains.requests;
 
 import lombok.Data;
 
@@ -6,4 +6,5 @@ import lombok.Data;
 public class AnimePutRequestBody {
     private Long id;
     private String name;
+
 }
