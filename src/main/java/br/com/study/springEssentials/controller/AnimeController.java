@@ -1,6 +1,8 @@
 package br.com.study.springEssentials.controller;
 
 import br.com.study.springEssentials.domain.Anime;
+import br.com.study.springEssentials.requests.AnimePostRequestBody;
+import br.com.study.springEssentials.requests.AnimePutRequestBody;
 import br.com.study.springEssentials.service.AnimeService;
 import br.com.study.springEssentials.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +33,12 @@ public class AnimeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id){
-        return new ResponseEntity<>(animeService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestExceptionOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime){
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -46,8 +48,8 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Anime> replace(@RequestBody Anime anime){
-        animeService.replace(anime);
+    public ResponseEntity<Anime> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

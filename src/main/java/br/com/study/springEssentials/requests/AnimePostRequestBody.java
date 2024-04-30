@@ -1,0 +1,8 @@
+package br.com.study.springEssentials.requests;
+
+import lombok.Data;
+
+@Data
+public class AnimePostRequestBody {
+    private String name;
+}
