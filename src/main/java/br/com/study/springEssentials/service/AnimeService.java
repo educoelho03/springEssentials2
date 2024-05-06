@@ -2,9 +2,11 @@ package br.com.study.springEssentials.service;
 
 import br.com.study.springEssentials.domains.domain.Anime;
 import br.com.study.springEssentials.domains.mapper.AnimeMapper;
+import br.com.study.springEssentials.exceptions.BadRequestException;
 import br.com.study.springEssentials.repository.AnimeRepository;
 import br.com.study.springEssentials.domains.requests.AnimePostRequestBody;
 import br.com.study.springEssentials.domains.requests.AnimePutRequestBody;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,12 @@ public class AnimeService {
         return animeRepository.findAll();
     }
 
-    public Anime findByIdOrThrowBadRequestExceptionOrThrowBadRequestException(long id){
+    public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+                .orElseThrow(() -> new BadRequestException("Anime not found"));
     }
 
+    @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
          return animeRepository.save(animeMapper.toAnime(animePostRequestBody));
     }
@@ -38,10 +41,14 @@ public class AnimeService {
     }
 
     public void replace(AnimePutRequestBody animePutRequestBody){
-        Anime savedAnime = findByIdOrThrowBadRequestExceptionOrThrowBadRequestException(animePutRequestBody.getId());
+        Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
         Anime anime = animeMapper.toAnime(animePutRequestBody);
         anime.setId(savedAnime.getId());
 
         animeRepository.save(anime);
+    }
+
+    public List<Anime> findByName(String name){
+        return animeRepository.findByName(name);
     }
 }

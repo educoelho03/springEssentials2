@@ -5,6 +5,7 @@ import br.com.study.springEssentials.domains.requests.AnimePostRequestBody;
 import br.com.study.springEssentials.domains.requests.AnimePutRequestBody;
 import br.com.study.springEssentials.service.AnimeService;
 import br.com.study.springEssentials.domains.util.DateUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -33,11 +34,17 @@ public class AnimeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id){
-        return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestExceptionOrThrowBadRequestException(id), HttpStatus.OK);
+        return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<List<Anime>> listByName(@RequestParam String name){ // Usa se requestParam quando queremos passar parametros diretamente na URL
+        return new ResponseEntity<>(animeService.findByName(name), HttpStatus.OK);
+
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
