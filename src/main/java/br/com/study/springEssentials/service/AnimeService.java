@@ -8,9 +8,9 @@ import br.com.study.springEssentials.domains.requests.AnimePostRequestBody;
 import br.com.study.springEssentials.domains.requests.AnimePutRequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnimeService {
 
-    private AnimeRepository animeRepository;
+    private final AnimeRepository animeRepository;
     private AnimeMapper animeMapper;
 
 
-    public List<Anime> listAll(){
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable){
+        return animeRepository.findAll(pageable);
     }
 
     public Anime findByIdOrThrowBadRequestException(long id){
