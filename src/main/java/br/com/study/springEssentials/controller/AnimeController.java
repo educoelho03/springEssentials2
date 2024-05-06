@@ -34,6 +34,11 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.listAll(pageable), HttpStatus.OK); // Para retornar o status da aplicação usamos o ResponseEntity
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Anime>> listAll(){
+        return new ResponseEntity<>(animeService.listAllNonPageable(), HttpStatus.OK); // Para retornar o status da aplicação usamos o ResponseEntity
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id){
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
