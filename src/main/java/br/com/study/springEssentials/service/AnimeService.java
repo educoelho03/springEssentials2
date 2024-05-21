@@ -19,8 +19,7 @@ import java.util.List;
 public class AnimeService {
 
     private final AnimeRepository animeRepository;
-    private AnimeMapper animeMapper;
-
+    private final AnimeMapper animeMapper;
 
     public Page<Anime> listAll(Pageable pageable){
         return animeRepository.findAll(pageable);
@@ -33,6 +32,10 @@ public class AnimeService {
     public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Anime not found"));
+    }
+
+    public List<Anime> findByName(String name){
+        return animeRepository.findByName(name);
     }
 
     @Transactional
@@ -50,9 +53,5 @@ public class AnimeService {
         anime.setId(savedAnime.getId());
 
         animeRepository.save(anime);
-    }
-
-    public List<Anime> findByName(String name){
-        return animeRepository.findByName(name);
     }
 }

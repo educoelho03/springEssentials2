@@ -25,12 +25,10 @@ import java.util.List;
 //@Controller  funciona da mesma maneira mas nao tem o ResponseBody, entao teria que adicionar para cada método um @ResponseBody
 public class AnimeController {
 
-    private final DateUtil dateUtil;
     private final AnimeService animeService;
 
     @GetMapping
     public ResponseEntity<Page<Anime>> list(Pageable pageable){
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(animeService.listAll(pageable), HttpStatus.OK); // Para retornar o status da aplicação usamos o ResponseEntity
     }
 
@@ -45,7 +43,7 @@ public class AnimeController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<Anime>> listByName(@RequestParam String name){ // Usa se requestParam quando queremos passar parametros diretamente na URL
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name){ // Usa se requestParam quando queremos passar parametros diretamente na URL
         return new ResponseEntity<>(animeService.findByName(name), HttpStatus.OK);
 
     }
@@ -62,7 +60,7 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Anime> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
         animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
