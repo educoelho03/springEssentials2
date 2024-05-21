@@ -1,10 +1,12 @@
 package br.com.study.springEssentials.service;
 
 import br.com.study.springEssentials.domains.domain.Anime;
+import br.com.study.springEssentials.exceptions.BadRequestException;
 import br.com.study.springEssentials.repository.AnimeRepository;
 import br.com.study.springEssentials.util.AnimeCreator;
 import br.com.study.springEssentials.util.AnimePostRequestBodyCreator;
 import br.com.study.springEssentials.util.AnimePutRequestBodyCreator;
+import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -79,7 +81,7 @@ public class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("FindById returns anime when successful")
+    @DisplayName("FindByIdOrThrowBadRequestException returns anime when successful")
     void findByIdOrThrowBadRequestException_ReturnSAnime_WhenSuccessful(){
         Long expectedId = AnimeCreator.createValidAnime().getId();
         Anime animes = animeService.findByIdOrThrowBadRequestException(1L);
@@ -87,6 +89,17 @@ public class AnimeServiceTest {
         Assertions.assertThat(animes).isNotNull();
         Assertions.assertThat(animes.getId()).isNotNull().isEqualTo(expectedId);
     }
+
+    @Test
+    @DisplayName("FindByIdOrThrowBadRequestException throws BadRequestException when anime is not found")
+    void findByIdOrThrowBadRequestException_ThrowsBadRequestException_WhenAnimeIsNotFound(){
+
+        BDDMockito.when(animeRepositoryMock.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.empty());
+
+        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> animeService.findByIdOrThrowBadRequestException(1L));
+    }
+
 
     @Test
     @DisplayName("FindByName returns anime when successful")
