@@ -33,7 +33,7 @@ public class SpringClient {
         log.info("Saved anime {}", kingdomSaved);
 
         Anime samurai = Anime.builder().name("Samurai").build();
-        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.POST, new HttpEntity<>(kingdom) , Anime.class);
+        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.POST, new HttpEntity<>(kingdom) , Anime.class);]
     }
 
 
