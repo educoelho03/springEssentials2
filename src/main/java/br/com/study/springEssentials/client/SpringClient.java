@@ -1,15 +1,9 @@
 package br.com.study.springEssentials.client;
 
-import br.com.study.springEssentials.SpringEssentialsApplication;
 import br.com.study.springEssentials.domains.domain.Anime;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -33,10 +27,22 @@ public class SpringClient {
         log.info("Saved anime {}", kingdomSaved);
 
         Anime samurai = Anime.builder().name("Samurai").build();
-        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.POST, new HttpEntity<>(kingdom) , Anime.class);]
+        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.POST, new HttpEntity<>(samurai) , Anime.class);
+
+
+        Anime animeToBeUpdated = samuraiSaved.getBody();
+        animeToBeUpdated.setName("Dragon Ball z");
+
+        ResponseEntity<Void> samuraiUpdated = new RestTemplate().exchange("http://localhost:8080/animes/", HttpMethod.PUT, new HttpEntity<>(animeToBeUpdated, createJsonHeader()), Void.class);
+        log.info(samuraiUpdated);
+
+        ResponseEntity<Void> samuraiDeleted = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.DELETE, new HttpEntity<>(animeToBeUpdated, createJsonHeader()), Void.class, animeToBeUpdated.getId());
+        log.info(samuraiDeleted);
     }
 
-
-
-
+    private static HttpHeaders createJsonHeader(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        return httpHeaders;
+    }
 }
