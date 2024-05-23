@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collections;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class) // para trabalhar com testes unitarios, atraves desse springExtension, informa que queremos usar o jUnit com Spring
@@ -100,6 +101,17 @@ public class AnimeControllerTest {
         Assertions.assertThat(animes)
                 .isNotNull()
                 .isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("FindByName returns an empty list of anime when anime is not found")
+    void findByName_ReturnEmptyListOfAnime_WhenAnimeIsNotFound(){
+        BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString()))
+                .thenReturn(Collections.emptyList());
+
+        List<Anime> animes = animeController.findByName("anime").getBody();
+
+        Assertions.assertThat(animes).isNotNull().isEmpty();
     }
 
     @Test
