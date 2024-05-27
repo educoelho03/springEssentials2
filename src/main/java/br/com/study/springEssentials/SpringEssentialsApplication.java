@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Log4j2
 public class SpringEssentialsApplication {
 	public static void main(String[] args) {
-		log.info("Iniciando a minha aplicação.");
+		log.info("Iniciando a minha aplicação aula 39 e 40.");
 		SpringApplication.run(SpringEssentialsApplication.class, args);
 		log.info("API de estudos criada com sucesso.");
 	}
