@@ -45,7 +45,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin/{id}")
     public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails){ // pegar os dados de quem esta autenticado
         log.info(userDetails);
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
