@@ -4,20 +4,21 @@ import br.com.study.springEssentials.domains.domain.Anime;
 import br.com.study.springEssentials.domains.requests.AnimePostRequestBody;
 import br.com.study.springEssentials.domains.requests.AnimePutRequestBody;
 import br.com.study.springEssentials.service.AnimeService;
-import br.com.study.springEssentials.domains.util.DateUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController // server para identificar que isso é um controller e vai adicionar o ResponseBody que todos os metodos vao retornar String
@@ -31,7 +32,9 @@ public class AnimeController {
     private final AnimeService animeService;
 
     @GetMapping
-    public ResponseEntity<Page<Anime>> list(Pageable pageable){
+    @Operation(summary = "List all animes paginated", description = "the default size is 20, use the parameter size to change the default value",
+    tags = {"anime"})
+    public ResponseEntity<Page<Anime>> list(@ParameterObject Pageable pageable){
         return new ResponseEntity<>(animeService.listAll(pageable), HttpStatus.OK); // Para retornar o status da aplicação usamos o ResponseEntity
     }
 
@@ -45,8 +48,9 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
-    @GetMapping("/admin/{id}")
-    public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails){ // pegar os dados de quem esta autenticado
+    @GetMapping("/admin/-{id}")
+    public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
+                                                                 @AuthenticationPrincipal UserDetails userDetails){ // pegar os dados de quem esta autenticado
         log.info(userDetails);
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
@@ -63,6 +67,10 @@ public class AnimeController {
     }
 
     @DeleteMapping("/admin/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successful Operation"),
+            @ApiResponse(responseCode = "400", description = "When anime does not exist in the Databsae")
+    })
     public ResponseEntity<Void> delete(@PathVariable Long id){
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
