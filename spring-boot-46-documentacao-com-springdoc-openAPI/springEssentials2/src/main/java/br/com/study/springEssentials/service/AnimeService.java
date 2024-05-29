@@ -21,7 +21,7 @@ public class AnimeService {
     private final AnimeRepository animeRepository;
     private final AnimeMapper animeMapper;
 
-    public Page<Anime> listAll(Pageable pageable){
+    public Page<Anime> listAll(Pageable pageable) {
         return animeRepository.findAll(pageable);
     }
 

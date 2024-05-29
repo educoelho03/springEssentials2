@@ -63,14 +63,14 @@ public class SecurityConfig {
                 .roles("USER", "ADMIN")
                 .build();
 
-        log.info("Password Encoder user: {}", passwordEncoder.encode(user.getPassword()));
+        log.info("Password Encoder user: {}", user.getPassword());
 
         UserDetails user2 = User.withUsername("fefe")
                 .password(passwordEncoder.encode("academy"))
                 .roles("USER")
                 .build();
 
-        log.info("Password Encoder user2: {}", passwordEncoder.encode(user2.getPassword()));
+        log.info("Password Encoder user2: {}", user2.getPassword());
 
         return new InMemoryUserDetailsManager(user, user2);
     }

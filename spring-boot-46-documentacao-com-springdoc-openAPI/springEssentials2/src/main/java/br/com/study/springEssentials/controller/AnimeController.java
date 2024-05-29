@@ -48,7 +48,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
-    @GetMapping("/admin/-{id}")
+    @GetMapping("/admin/by-id/{id}")
     public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
                                                                  @AuthenticationPrincipal UserDetails userDetails){ // pegar os dados de quem esta autenticado
         log.info(userDetails);
@@ -66,7 +66,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/by-id/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Successful Operation"),
             @ApiResponse(responseCode = "400", description = "When anime does not exist in the Databsae")
