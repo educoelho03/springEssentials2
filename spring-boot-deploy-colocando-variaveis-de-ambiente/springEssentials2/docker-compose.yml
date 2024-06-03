@@ -34,7 +34,7 @@ services:
           memory: 128M
 
   # springboot2-essentials:
-  #   image: registry.hub.docker.com/educoelho/springEssentials2:0.0.1-SNAPSHOT
+  #   image: registry.hub.docker.com/educoelho/springessentials-0.0.1-snapshot
   #   ports:
   #     - "8080:8080"
   #   environment:
