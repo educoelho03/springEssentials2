@@ -37,7 +37,8 @@ public class RestExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationExceptionDetails> handlerMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-        List<FieldMessage> fieldMessages = fieldErrors.stream().map(fieldError -> new FieldMessage(fieldError.getField(), fieldError.getDefaultMessage())).toList();
+        List<FieldMessage> fieldMessages = fieldErrors.stream().map(fieldError -> new FieldMessage(fieldError.getField(), fieldError.getDefaultMessage()))
+                .collect(Collectors.toList());
 
         return new ResponseEntity<>(
                 ValidationExceptionDetails.builder()

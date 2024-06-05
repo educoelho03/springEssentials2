@@ -17,7 +17,7 @@
 		<java.version>17</java.version>
 		<jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
 		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-		<docker.distroless.image>grc.io/distroless/java:11</docker.distroless.image>
+		<docker.distroless.image>gcr.io/distroless/java:17</docker.distroless.image>
 		<docker.repo.url>registry.hub.docker.com/educoelho</docker.repo.url>
 		<docker.repo.project>springboot2-essentials</docker.repo.project>
 		<docker.image.name>${docker.repo.url}/${docker.repo.project}</docker.image.name>
@@ -130,6 +130,11 @@
 						<mainClass>br.com.study.springEssentials.SpringEssentialsApplication</mainClass>
 					</container>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

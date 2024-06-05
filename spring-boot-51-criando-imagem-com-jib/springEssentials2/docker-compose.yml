@@ -33,16 +33,16 @@ services:
         limits:
           memory: 128M
 
-  springboot2-essentials:
-    image: registry.hub.docker.com/educoelho/springEssentials2:0.0.1-SNAPSHOT
-    ports:
-      - "8080:8080"
-    environment:
-      <<: *database-variables
-    deploy:
-      resources:
-        limits:
-          memory: 1000M
+  # springboot2-essentials:
+  #   image: registry.hub.docker.com/educoelho/springEssentials2:0.0.1-SNAPSHOT
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     <<: *database-variables
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 1000M
 
   grafana:
     image: grafana/grafana:latest
